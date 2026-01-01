@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beats & Bytes - Resources & Showcase</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a0f2e;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(92, 219, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(92, 219, 255, 0.03) 3px),
+                repeating-linear-gradient(90deg, rgba(92, 219, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(92, 219, 255, 0.03) 3px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 50%, 
+                rgba(0, 0, 0, 0.1) 51%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 2;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        .pixel-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' fill='%231a0f2e'/%3E%3Crect width='2' height='2' x='10' y='10' fill='%23ff6b35'/%3E%3Crect width='2' height='2' x='30' y='20' fill='%235cdbff'/%3E%3Crect width='2' height='2' x='20' y='30' fill='%23ff6b35'/%3E%3C/svg%3E");
+            animation: pixelFloat 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pixelFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-40px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* --- Updated Hero Styling --- */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+        }
+
+        .hero-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4rem;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .hero-poster {
+            width: 100%;
+            max-width: 380px;
+            border: 8px solid #5cdbff;
+            box-shadow: 12px 12px 0px #ff6b35;
+            image-rendering: pixelated; /* Keeps the poster looking crisp and retro */
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .arcade-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: #5cdbff;
+            text-shadow: 
+                4px 4px 0px #ff6b35,
+                8px 8px 0px rgba(0,0,0,0.5),
+                0 0 20px #5cdbff;
+            margin-bottom: 1.5rem;
+            animation: arcade-glow 1.5s ease-in-out infinite alternate;
+            letter-spacing: 0.2rem;
+            line-height: 1.3;
+        }
+
+        @keyframes arcade-glow {
+            from { text-shadow: 4px 4px 0px #ff6b35, 8px 8px 0px rgba(0,0,0,0.5), 0 0 20px #5cdbff; }
+            to { text-shadow: 4px 4px 0px #ff6b35, 8px 8px 0px rgba(0,0,0,0.5), 0 0 35px #5cdbff; }
+        }
+
+        .subtitle {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(0.7rem, 2vw, 1.1rem);
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+            letter-spacing: 0.15rem;
+            line-height: 1.8;
+        }
+
+        /* --- Sections --- */
+        section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            color: #5cdbff;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            text-shadow: 3px 3px 0px #ff6b35;
+            letter-spacing: 0.1rem;
+            line-height: 1.6;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .resource-card {
+            background: rgba(26, 15, 46, 0.95);
+            border: 4px solid #5cdbff;
+            padding: 2rem;
+            box-shadow: 8px 8px 0px #ff6b35;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 15px;
+            height: 15px;
+            background: #5cdbff;
+        }
+
+        .resource-card::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: -4px;
+            width: 15px;
+            height: 15px;
+            background: #ff6b35;
+        }
+
+        .resource-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 11px 11px 0px #ff6b35;
+        }
+
+        .resource-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.1rem;
+            color: #ff8c42;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .resource-card p {
+            color: #e0e0e0;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .pixel-button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 0.8rem 1.5rem;
+            background: #ff6b35;
+            color: #fff;
+            border: 3px solid #fff;
+            box-shadow: 4px 4px 0px #5cdbff;
+            cursor: pointer;
+            transition: all 0.1s;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .pixel-button:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #5cdbff;
+        }
+
+        .pixel-button.secondary {
+            background: #5cdbff;
+            box-shadow: 4px 4px 0px #ff6b35;
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(26, 15, 46, 0.8);
+            border: 4px dashed #ff6b35;
+            margin: 2rem 0;
+        }
+
+        .coming-soon p {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: #ff8c42;
+            line-height: 2;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.5; }
+        }
+
+        @media (max-width: 900px) {
+            .hero-layout {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text, .arcade-title, .subtitle {
+                text-align: center;
+            }
+            .hero-poster {
+                max-width: 280px;
+            }
+            .arcade-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    <div class="pixel-bg"></div>
+    
+    <div class="container">
+        <div class="hero">
+            <div class="hero-layout">
+                <img src="poster.png" alt="Beats & Bytes Poster" class="hero-poster">
+                
+                <div class="hero-text">
+                    <h1 class="arcade-title">BEATS<br>& BYTES</h1>
+                    <h2 class="subtitle">Resources & Showcase</h2>
+                    <a href="https://iitmparadox.org/events/26" class="pixel-button">Register Now</a>
+                </div>
+            </div>
+        </div>
+
+        <section id="resources">
+            <h2>Workshop Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>Session 1 Slides</h3>
+                    <p>How Do Computers See Music? (vs Humans) - Soham Korade</p>
+                    <a href="#" class="pixel-button">View Slides</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>Session 2 Slides</h3>
+                    <p>Fundamentals of Music Information Retrieval - Arjun Bahuguna</p>
+                    <a href="#" class="pixel-button">View Slides</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>Code</h3>
+                    <p>From the build-along sessions</p>
+                    <a href="#" class="pixel-button secondary">GitHub Repo</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>Additional Resources</h3>
+                    <p>Curated links, tutorials, and tools for further exploration</p>
+                    <a href="#" class="pixel-button secondary">View Resources</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="showcase">
+            <h2>Participant Showcase</h2>
+            <div class="coming-soon">
+                <p>SUBMISSIONS LOADING...<br><br>Check back soon to see<br>amazing projects from participants!</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
